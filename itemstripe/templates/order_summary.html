@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    {% if order %}
+    <h1>Your Order</h1>
+    <ul>
+        {% for order_item in order.items.all %}
+            <li>{{ order_item.item.name }} - {{ order_item.item.price }} (Quantity: {{ order_item.quantity }})</li>
+        {% endfor %}
+    </ul>
+    <p>Total:{% if order.items.first.item.currency == 'eur' %}€{% else %}${% endif %}{{ order.get_total_price }}</p>
+
+    {% if form %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+    {% else %}
+    <p>Form is not available.</p>
+    {% endif %}
+
+    <button id="buy-button">Buy</button>
+    <script>
+        const stripe = Stripe('{{ STRIPE_PUBLIC_KEY }}');
+        const buyButton = document.getElementById('buy-button');
+        const orderId = '{{ order.id }}';
+
+        buyButton.addEventListener('click', async (e) => {
+            const response = await fetch(`/order_buy/${orderId}/`);
+            const session = await response.json();
+            const result = await stripe.redirectToCheckout({
+                sessionId: session.session_id,
+            });
+            if (result.error) {
+                alert(result.error.message);
+            }
+        });
+    </script>
+{% else %}
+    <p>No items in the order.</p>
+{% endif %}
+</body>
+</html>
