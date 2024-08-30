@@ -18,7 +18,7 @@
 1. **Клонируйте репозиторий:**
 
     ```sh
-    git clone https://github.com/yourusername/stripeapi.git
+    git clone https://github.com/CrucianAllod/stripeapi.git
     cd stripeapi
     ```
 
