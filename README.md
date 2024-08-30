@@ -24,10 +24,11 @@
 
 2. **Настройте переменные окружения:**
 
-    Скопируйте файл `.env.example` в `.env` `.env.docker`, обновите необходимые переменные, такие как `SECRET_KEY`, `DEBUG`, `STRIPE_PUBLIC_KEY` и `STRIPE_SECRET_KEY`.
+    Скопируйте файл `.env.example` в `.env` и `.env.docker`, обновите необходимые переменные, такие как `SECRET_KEY`, `DEBUG`, `STRIPE_PUBLIC_KEY` и `STRIPE_SECRET_KEY`.
 
     ```sh
-    cp .env.docker .env
+    cp .env.example .env
+    cp .env.example .env.docker
     ```
 
 3. **Соберите и запустите Docker контейнер:**
