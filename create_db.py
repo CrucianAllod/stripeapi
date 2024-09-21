@@ -1,5 +1,7 @@
 import os
 import sys
+import random
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stripeapi.settings')
 
@@ -47,11 +49,11 @@ def create():
     if not Discount.objects.exists():
         coupons = [
             {
-                'code': 'DISCOUNT_USD',
+                'code': 'DISCOUNT' + str(random.randint(1,1000)) + '_USD',
                 'amount': 10.0,
             },
                         {
-                'code': 'DISCOUNT_EUR',
+                'code': 'DISCOUNT' + str(random.randint(1,1000)) + '_EUR',
                 'amount': 10.0,
             },
         ]
